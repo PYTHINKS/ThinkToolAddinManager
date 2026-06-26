@@ -46,19 +46,23 @@ Available configurations:
 
 ## Install for AutoCAD
 
-For the fastest install, download the latest `ThinkToolAddinManager-*-bundle.zip` from [Releases](https://github.com/PYTHINKS/ThinkToolAddinManager/releases).
+For the fastest install, download the latest `ThinkToolAddinManager-*-setup.exe` from [Releases](https://github.com/PYTHINKS/ThinkToolAddinManager/releases), then run it.
 
-Extract the zip and copy `ThinkToolAddinManager.bundle` to:
+The installer copies `ThinkToolAddinManager.bundle` to:
 
 ```text
 %APPDATA%\Autodesk\ApplicationPlugins
 ```
 
-Then start AutoCAD and run:
+Then restart AutoCAD and run:
 
 ```text
 ThinkToolManager
 ```
+
+Manual zip install:
+
+Download `ThinkToolAddinManager-*-bundle.zip`, extract it, and copy `ThinkToolAddinManager.bundle` to `%APPDATA%\Autodesk\ApplicationPlugins`.
 
 Manual build/install:
 
@@ -116,6 +120,12 @@ Create a local bundle zip:
 
 ```powershell
 .\tools\package-release.ps1 -Version v1.0.0
+```
+
+Create a local one-click installer:
+
+```powershell
+.\tools\build-installer.ps1 -Version v1.0.0
 ```
 
 The zip is written to `artifacts/`. GitHub Releases are created automatically when a `v*` tag is pushed.

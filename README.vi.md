@@ -46,19 +46,23 @@ Các configuration hiện có:
 
 ## Cài đặt cho AutoCAD
 
-Cách nhanh nhất: tải file `ThinkToolAddinManager-*-bundle.zip` mới nhất ở [Releases](https://github.com/PYTHINKS/ThinkToolAddinManager/releases).
+Cách nhanh nhất: tải file `ThinkToolAddinManager-*-setup.exe` mới nhất ở [Releases](https://github.com/PYTHINKS/ThinkToolAddinManager/releases), sau đó chạy file đó.
 
-Giải nén file zip và copy thư mục `ThinkToolAddinManager.bundle` vào:
+Installer sẽ tự copy `ThinkToolAddinManager.bundle` vào:
 
 ```text
 %APPDATA%\Autodesk\ApplicationPlugins
 ```
 
-Sau đó mở AutoCAD và chạy:
+Sau đó khởi động lại AutoCAD và chạy:
 
 ```text
 ThinkToolManager
 ```
+
+Cài thủ công bằng file zip:
+
+Tải `ThinkToolAddinManager-*-bundle.zip`, giải nén, rồi copy `ThinkToolAddinManager.bundle` vào `%APPDATA%\Autodesk\ApplicationPlugins`.
 
 Cài đặt thủ công sau khi tự build:
 
@@ -118,7 +122,13 @@ Tạo file bundle zip trên máy local:
 .\tools\package-release.ps1 -Version v1.0.0
 ```
 
-File zip sẽ nằm trong thư mục `artifacts/`. GitHub Releases sẽ được tạo tự động khi push tag dạng `v*`.
+Tạo installer một-click trên máy local:
+
+```powershell
+.\tools\build-installer.ps1 -Version v1.0.0
+```
+
+File output sẽ nằm trong thư mục `artifacts/`. GitHub Releases sẽ được tạo tự động khi push tag dạng `v*`.
 
 ## License
 
