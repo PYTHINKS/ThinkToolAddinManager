@@ -1,0 +1,50 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Release version, for example v1.0.0
+        required: true
+        default: v1.0.0
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Package bundle
+        shell: pwsh
+        run: |
+          $version = "${{ github.ref_name }}"
+          if ("${{ github.event_name }}" -eq "workflow_dispatch") {
+            $version = "${{ github.event.inputs.version }}"
+          }
+          ./tools/package-release.ps1 -Version $version
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.version || github.ref_name }}
+          name: ThinkTool Add-in Manager ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.version || github.ref_name }}
+          files: artifacts/*.zip
+          body: |
+            Download `ThinkToolAddinManager-*-bundle.zip`, extract it, and copy `ThinkToolAddinManager.bundle` to:
+
+            `%APPDATA%\Autodesk\ApplicationPlugins`
+
+            Restart AutoCAD and run `ThinkToolManager`.
